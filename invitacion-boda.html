@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Nuestra Boda</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+<style>
+
+    .slider{
+position:relative;
+width:320px;
+margin:30px auto;
+overflow:hidden;
+border-radius:15px;
+}
+
+.slide{
+width:100%;
+display:none;
+border-radius:15px;
+transition:0.5s;
+}
+
+.slide.active{
+display:block;
+}
+
+.prev,.next{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.5);
+color:white;
+border:none;
+font-size:24px;
+padding:10px;
+cursor:pointer;
+border-radius:50%;
+}
+
+.prev{
+left:10px;
+}
+
+.next{
+right:10px;
+}
+
+.slide:hover{
+transform:scale(1.05);
+}
+
+@media (max-width:700px){
+
+.card{
+width:90%;
+padding:25px;
+}
+
+h1{
+font-size:40px;
+}
+
+.nombres{
+font-size:30px;
+}
+
+}
+
+.titulo{
+font-family:'Great Vibes',cursive;
+font-size:60px;
+color:#c9184a;
+animation:brillo 3s infinite;
+}
+
+@keyframes brillo{
+0%{text-shadow:0 0 5px pink;}
+50%{text-shadow:0 0 20px red;}
+100%{text-shadow:0 0 5px pink;}
+}
+
+body{
+margin:0;
+background:linear-gradient(135deg,#fde2e4,#f8edeb);
+font-family:'Poppins',sans-serif;
+text-align:center;
+overflow:auto;
+padding-top: 20px;
+}
+
+h1{
+font-family:'Great Vibes',cursive;
+font-size:60px;
+color:#c9184a;
+}
+
+.nombres{
+font-family:'Great Vibes',cursive;
+font-size:45px;
+color:#444;
+}
+
+.card{
+background:white;
+width:600px;
+margin:60px auto;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+position:relative;
+z-index:2;
+}
+
+.info{
+font-size:20px;
+margin:10px;
+}
+
+.countdown{
+font-size:28px;
+color:#c9184a;
+margin-top:20px;
+}
+
+button{
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#c9184a;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#a4133c;
+}
+
+/* FLORES */
+
+.flower{
+position:fixed;
+top:-50px;
+font-size:24px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+}
+}
+
+/* CORAZONES */
+
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:20px;
+color:#ff4d6d;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+to{
+transform:translateY(-110vh);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1 class="titulo">💍 Nuestra Boda 💍</h1>
+
+<div class="nombres">
+Santos Bacilia Murillo 💖 Jose Daniel Mendez
+
+<h2>Nuestros momentos 💖</h2>
+
+<div class="slider">
+
+<button class="prev" onclick="cambiar(-1)">❮</button>
+
+<img class="slide" src="foto1.jpg">
+<img class="slide" src="foto2.jpg">
+
+<button class="next" onclick="cambiar(1)">❯</button>
+
+</div>
+
+</div>
+
+<p class="info">Con la bendición de Dios y nuestros padres</p>
+
+<p class="info">📅 18 de abril de 2026</p>
+<p class="info">⛪ Iglesia Señor de Intibuca</p>
+<p class="info">🕓 4:00 PM</p>
+
+<h3>Faltan para la boda:</h3>
+
+<div class="countdown" id="contador"></div>
+
+<br>
+
+<button onclick="confirmar()">Confirmar asistencia</button>
+
+<br><br>
+
+<audio id="musica" loop>
+<source src= "cansion.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick="reproducirMusica()">🎵 Reproducir música</button>
+</div>
+
+<script>
+
+    var slides=document.querySelectorAll(".slide");
+var index=0;
+
+function mostrar(){
+slides.forEach(slide=>slide.classList.remove("active"));
+slides[index].classList.add("active");
+}
+
+function cambiar(n){
+index=index+n;
+
+if(index>=slides.length){
+index=0;
+}
+
+if(index<0){
+index=slides.length-1;
+}
+
+mostrar();
+}
+
+mostrar();
+
+function reproducirMusica(){
+    var audio = document.getElementById("musica");
+    audio.play();
+}
+
+
+/* CONTADOR */
+
+var fechaBoda = new Date("April 18, 2026 16:00:00").getTime();
+
+setInterval(function(){
+
+var ahora = new Date().getTime();
+var distancia = fechaBoda - ahora;
+
+var dias = Math.ceil(distancia/(1000*60*60*24));
+var horas = Math.floor((distancia%(1000*60*60*24))/(1000*60*60));
+var minutos = Math.floor((distancia%(1000*60*60))/(1000*60));
+var segundos = Math.floor((distancia%(1000*60))/1000);
+
+document.getElementById("contador").innerHTML =
+dias+" días "+horas+"h "+minutos+"m "+segundos+"s";
+
+},1000);
+
+function confirmar(){
+alert("¡Gracias por confirmar tu asistencia! 💖");
+}
+
+/* FLORES */
+
+function crearFlor(){
+let flor=document.createElement("div");
+flor.classList.add("flower");
+flor.innerHTML="🌸";
+flor.style.left=Math.random()*100+"vw";
+flor.style.animationDuration=(3+Math.random()*5)+"s";
+document.body.appendChild(flor);
+
+setTimeout(()=>{
+flor.remove();
+},8000);
+}
+
+setInterval(crearFlor,500);
+
+/* CORAZONES */
+
+function crearCorazon(){
+let corazon=document.createElement("div");
+corazon.classList.add("heart");
+corazon.innerHTML="❤";
+corazon.style.left=Math.random()*100+"vw";
+corazon.style.animationDuration=(4+Math.random()*4)+"s";
+document.body.appendChild(corazon);
+
+setTimeout(()=>{
+corazon.remove();
+},8000);
+}
+
+setInterval(crearCorazon,800);
+
+</script>
+
+</body>
+</html>
+
