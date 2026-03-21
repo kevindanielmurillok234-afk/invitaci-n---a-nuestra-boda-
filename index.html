@@ -135,12 +135,15 @@ color:#555;
 
 /* BUZÓN */
 .buzon-seccion{
+width: 100%;
 margin-top:60px;
-display:flex;
+padding: 40px 20px;
+display:block;
 justify-content:center;
 }
 
 .buzon-box{
+margin: 40px auto;
 background:white;
 width:600px;
 max-width:90%;
@@ -212,6 +215,17 @@ animation:rotar 2s infinite linear;
 @keyframes rotar{
 0%{transform:rotate(0deg);}
 100%{transform:rotate(360deg);}
+}
+
+@media (max-width: 600px) {
+.buzon-box {
+        width:90%;
+        padding: 25px; 
+}
+.buzon-seccion {
+        margin-top: 60px;
+        padding: 40px 20px;
+}
 }
 
 </style>
