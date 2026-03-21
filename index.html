@@ -8,10 +8,84 @@
 
 <style>
 
-    .slider{
+    #sobre{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#f8edeb;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+cursor:pointer;
+z-index:999;
+animation:latido 1s infinite;
+}
+
+body{
+margin:0;
+background:linear-gradient(135deg,#fde2e4,#f8edeb);
+font-family:'Poppins',sans-serif;
+text-align:center;
+}
+
+/* TARJETA */
+.card{
+background:white;
+width:600px;
+max-width:90%;
+margin:60px auto;
+padding:40px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.titulo{
+font-family:'Great Vibes',cursive;
+font-size:60px;
+color:#c9184a;
+}
+
+.nombres{
+font-family:'Great Vibes',cursive;
+font-size:45px;
+color:#444;
+}
+
+.info{
+font-size:18px;
+margin:10px;
+}
+
+.countdown{
+font-size:26px;
+color:#c9184a;
+margin-top:15px;
+}
+
+/* BOTÓN */
+button{
+padding:12px 25px;
+font-size:16px;
+border:none;
+border-radius:10px;
+background:#c9184a;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#8b1638;
+}
+
+/* SLIDER */
+.slider{
 position:relative;
-width:320px;
-margin:30px auto;
+width:100%;
+max-width:350px;
+margin:20px auto;
 overflow:hidden;
 border-radius:15px;
 }
@@ -19,8 +93,6 @@ border-radius:15px;
 .slide{
 width:100%;
 display:none;
-border-radius:15px;
-transition:0.5s;
 }
 
 .slide.active{
@@ -34,140 +106,112 @@ transform:translateY(-50%);
 background:rgba(0,0,0,0.5);
 color:white;
 border:none;
-font-size:24px;
 padding:10px;
-cursor:pointer;
 border-radius:50%;
+cursor:pointer;
 }
 
-.prev{
-left:10px;
-}
+.prev{left:10px;}
+.next{right:10px;}
 
-.next{
-right:10px;
-}
-
-.slide:hover{
-transform:scale(1.05);
-}
-
-@media (max-width:700px){
-
-.card{
-width:90%;
-padding:25px;
-}
-
-h1{
+/* MÚSICA */
+.player button{
 font-size:40px;
+background:none;
+border:none;
+animation:latido 1s infinite;
 }
 
-.nombres{
-font-size:30px;
+@keyframes latido{
+0%{transform:scale(1);}
+50%{transform:scale(1.2);}
+100%{transform:scale(1);}
 }
 
+.texto-musica{
+font-size:20px;
+color:#555;
 }
 
-.titulo{
-font-family:'Great Vibes',cursive;
-font-size:60px;
-color:#c9184a;
-animation:brillo 3s infinite;
+/* BUZÓN */
+.buzon-seccion{
+margin-top:60px;
+display:flex;
+justify-content:center;
 }
 
-@keyframes brillo{
-0%{text-shadow:0 0 5px pink;}
-50%{text-shadow:0 0 20px red;}
-100%{text-shadow:0 0 5px pink;}
-}
-
-body{
-margin:0;
-background:linear-gradient(135deg,#fde2e4,#f8edeb);
-font-family:'Poppins',sans-serif;
-text-align:center;
-overflow:auto;
-padding-top: 20px;
-}
-
-h1{
-font-family:'Great Vibes',cursive;
-font-size:60px;
-color:#c9184a;
-}
-
-.nombres{
-font-family:'Great Vibes',cursive;
-font-size:45px;
-color:#444;
-}
-
-.card{
+.buzon-box{
 background:white;
 width:600px;
-margin:60px auto;
+max-width:90%;
 padding:40px;
 border-radius:20px;
 box-shadow:0 10px 30px rgba(0,0,0,0.2);
-position:relative;
-z-index:2;
+text-align:center;
+
+opacity:0;
+transform:translateY(50px);
+transition:1s;
 }
 
-.info{
-font-size:20px;
-margin:10px;
+.buzon-box.visible{
+opacity:1;
+transform:translateY(0);
 }
 
-.countdown{
-font-size:28px;
+.buzon-box h3{
+font-family:'Great Vibes',cursive;
 color:#c9184a;
-margin-top:20px;
+font-size:30px;
 }
 
-button{
-padding:12px 25px;
-font-size:18px;
-border:none;
+textarea{
+width:100%;
+height:100px;
 border-radius:10px;
-background:#c9184a;
-color:white;
-cursor:pointer;
+border:1px solid #ccc;
+padding:10px;
+margin-top:10px;
 }
 
-button:hover{
-background:#a4133c;
+.buzon-box button{
+margin-top:15px;
+background:linear-gradient(135deg,#ff4d6d,#c9184a);
 }
 
-/* FLORES */
+/* EFECTOS */
+.flower, .heart{
+position:fixed;
+font-size:20px;
+pointer-events:none;
+}
 
 .flower{
-position:fixed;
 top:-50px;
-font-size:24px;
 animation:fall linear infinite;
 }
 
 @keyframes fall{
-to{
-transform:translateY(100vh);
+to{transform:translateY(100vh);}
 }
-}
-
-/* CORAZONES */
 
 .heart{
-position:fixed;
 bottom:-20px;
-font-size:20px;
-color:#ff4d6d;
 animation:float 6s linear infinite;
 }
 
 @keyframes float{
-to{
-transform:translateY(-110vh);
+to{transform:translateY(-110vh);}
 }
+
+.ring{
+display:inline-block;
+animation:rotar 2s infinite linear;
+}
+
+@keyframes rotar{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
 }
 
 </style>
@@ -175,142 +219,167 @@ transform:translateY(-110vh);
 
 <body>
 
+    <div id="sobre" onclick="abrirInvitacion()">
+  💌 Toca para abrir la invitación
+</div>
+
+<div id="contenido" style="display:none;">
+
+<audio id="audio" src="cansion.mp3"></audio>
+
 <div class="card">
 
-<h1 class="titulo">💍 Nuestra Boda 💍</h1>
+<h1 class="titulo">
+<span class="ring">💍</span> Nuestra Boda <span class="ring">💍</span>
+</h1>
 
 <div class="nombres">
-Santos Bacilia Murillo 💖 Jose Daniel Mendez
+Santos Bacilia Murillo ❤️ Jose Daniel Mendez
+</div>
 
-<h2>Nuestros momentos 💖</h2>
+<h2>Nuestros momentos ❤️</h2>
 
 <div class="slider">
-
 <button class="prev" onclick="cambiar(-1)">❮</button>
 
-<img class="slide" src="foto1.jpg">
+<img class="slide active" src="foto1.jpg">
 <img class="slide" src="foto2.jpg">
 
 <button class="next" onclick="cambiar(1)">❯</button>
+</div>
+<p class="texto-musica">
+Presiona el ❤️ para escuchar nuestra canción
+</p>
 
+<div class="player">
+  <button onclick="document.getElementById('audio').play()">❤️</button>
 </div>
 
-</div>
 
-<p class="info">Con la bendición de Dios y nuestros padres</p>
+<p class="info">Con la bendición de Dios y nuestros padres te invitamos a compartir con nosotros este día especial</p>
 
 <p class="info">📅 18 de abril de 2026</p>
 <p class="info">⛪ Iglesia Señor de Intibuca</p>
 <p class="info">🕓 4:00 PM</p>
 
 <h3>Faltan para la boda:</h3>
-
 <div class="countdown" id="contador"></div>
 
 <br>
 
-<button onclick="confirmar()">Confirmar asistencia</button>
+<a href="https://wa.me/50498647047?text=Hola%20confirmo%20mi%20asistencia%20a%20la%20boda%20💍" target="_blank">
+<button>Confirmar asistencia</button>
+</a>
 
-<br><br>
-
-<audio id="musica" loop>
-<source src= "cansion.mp3" type="audio/mpeg">
-</audio>
-
-<button onclick="reproducirMusica()">🎵 Reproducir música</button>
 </div>
+
+<!-- BUZÓN -->
+<section class="buzon-seccion">
+
+<div class="buzon-box">
+
+<h3>💌 Buzón de los deseos</h3>
+
+<p>Déjanos un mensaje bonito para este día especial ❤️</p>
+
+<textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
+
+<button onclick="enviarMensaje()">Enviar mensaje</button>
+
+</div>
+
+</section>
 
 <script>
 
-    var slides=document.querySelectorAll(".slide");
+/* SLIDER */
+var slides=document.querySelectorAll(".slide");
 var index=0;
 
 function mostrar(){
-slides.forEach(slide=>slide.classList.remove("active"));
+slides.forEach(s=>s.classList.remove("active"));
 slides[index].classList.add("active");
 }
 
 function cambiar(n){
-index=index+n;
-
-if(index>=slides.length){
-index=0;
-}
-
-if(index<0){
-index=slides.length-1;
-}
-
+index+=n;
+if(index>=slides.length) index=0;
+if(index<0) index=slides.length-1;
 mostrar();
 }
 
 mostrar();
 
-function reproducirMusica(){
-    var audio = document.getElementById("musica");
-    audio.play();
+/* MENSAJE WHATSAPP */
+function enviarMensaje(){
+let mensaje=document.getElementById("mensaje").value;
+
+if(mensaje===""){
+alert("Escribe un mensaje 😊");
+return;
 }
 
+let url="https://wa.me/50498647047?text="+encodeURIComponent("Mensaje para la boda ❤️: "+mensaje);
+window.open(url,"_blank");
+}
 
 /* CONTADOR */
+var fecha=new Date("April 18, 2026 16:00:00").getTime();
 
-var fechaBoda = new Date("April 18, 2026 16:00:00").getTime();
+setInterval(()=>{
+let ahora=new Date().getTime();
+let d=fecha-ahora;
 
-setInterval(function(){
+let dias=Math.floor(d/(1000*60*60*24));
+let horas=Math.floor((d%(1000*60*60*24))/(1000*60*60));
+let min=Math.floor((d%(1000*60*60))/(1000*60));
+let seg=Math.floor((d%(1000*60))/1000);
 
-var ahora = new Date().getTime();
-var distancia = fechaBoda - ahora;
-
-var dias = Math.ceil(distancia/(1000*60*60*24));
-var horas = Math.floor((distancia%(1000*60*60*24))/(1000*60*60));
-var minutos = Math.floor((distancia%(1000*60*60))/(1000*60));
-var segundos = Math.floor((distancia%(1000*60))/1000);
-
-document.getElementById("contador").innerHTML =
-dias+" días "+horas+"h "+minutos+"m "+segundos+"s";
+document.getElementById("contador").innerHTML=
+dias+" días "+horas+"h "+min+"m "+seg+"s";
 
 },1000);
 
-function confirmar(){
-alert("¡Gracias por confirmar tu asistencia! 💖");
+/* EFECTOS */
+function flor(){
+let f=document.createElement("div");
+f.className="flower";
+f.innerHTML="🌸";
+f.style.left=Math.random()*100+"vw";
+f.style.animationDuration=(3+Math.random()*5)+"s";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),8000);
 }
+setInterval(flor,500);
 
-/* FLORES */
-
-function crearFlor(){
-let flor=document.createElement("div");
-flor.classList.add("flower");
-flor.innerHTML="🌸";
-flor.style.left=Math.random()*100+"vw";
-flor.style.animationDuration=(3+Math.random()*5)+"s";
-document.body.appendChild(flor);
-
-setTimeout(()=>{
-flor.remove();
-},8000);
+function corazon(){
+let c=document.createElement("div");
+c.className="heart";
+c.innerHTML="❤️";
+c.style.left=Math.random()*100+"vw";
+c.style.animationDuration=(4+Math.random()*4)+"s";
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),8000);
 }
+setInterval(corazon,800);
 
-setInterval(crearFlor,500);
+/* ANIMACIÓN BUZÓN */
+window.addEventListener("scroll",()=>{
+let b=document.querySelector(".buzon-box");
+let pos=b.getBoundingClientRect().top;
+let pantalla=window.innerHeight;
 
-/* CORAZONES */
-
-function crearCorazon(){
-let corazon=document.createElement("div");
-corazon.classList.add("heart");
-corazon.innerHTML="❤";
-corazon.style.left=Math.random()*100+"vw";
-corazon.style.animationDuration=(4+Math.random()*4)+"s";
-document.body.appendChild(corazon);
-
-setTimeout(()=>{
-corazon.remove();
-},8000);
+if(pos < pantalla-100){
+b.classList.add("visible");
 }
+});
 
-setInterval(crearCorazon,800);
+function abrirInvitacion(){
+document.getElementById("sobre").style.display="none";
+document.getElementById("contenido").style.display="block";
+}
 
 </script>
 
 </body>
 </html>
-
