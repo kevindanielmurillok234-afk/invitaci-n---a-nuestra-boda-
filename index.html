@@ -8,6 +8,24 @@
 
 <style>
 
+select{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+}
+
+/*BUZON DE MUSICA*/
+.buzon-box input{
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+
 /* SOBRE */
 #sobre{
 position:fixed;
@@ -23,6 +41,14 @@ font-size:30px;
 cursor:pointer;
 z-index:999;
 animation:latido 1s infinite;
+}
+#contenido{
+animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:scale(0.9);}
+to{opacity:1; transform:scale(1);}
 }
 
 /* GENERAL */
@@ -138,16 +164,9 @@ margin-top:10px;
 }
 
 /* BUZÓN */
-.buzon-seccion{
-width:100%;
-display:flex;
-justify-content:center;
-margin-top:40px;
-}
-
 .buzon-box{
 background:white;
-width:600px;
+width: 600px;
 max-width:90%;
 margin:40px auto;
 padding:40px;
@@ -202,26 +221,29 @@ color:red;
 @keyframes float{
 to{transform:translateY(-110vh);}
 }
-
-/* ANILLOS */
-.ring{
-display:inline-block;
-animation:rotar 2s infinite linear;
+.header-boda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
 }
 
-@keyframes rotar{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
+.anillo {
+  width: 40px;
+  filter: drop-shadow(0 0 5px gold);
+  animation: brillo 2s infinite alternate;
 }
 
-/* RESPONSIVE */
-@media (max-width:600px){
-.card, .buzon-box{
-width:90%;
-padding:25px;
+@keyframes brillo {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 3px gold);
+  }
+  100% {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 12px gold);
+  }
 }
-}
-
 </style>
 </head>
 
@@ -234,17 +256,19 @@ padding:25px;
 
 <div id="contenido" style="display:none;">
 
-<audio id="audio" src="cansion.mp3"></audio>
+<audio id="audio" src="cancion.mp3"></audio>
 
 <!-- TARJETA -->
 <div class="card">
+    <div class="header-boda">
+  <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="anillo">
 
-<h1 class="titulo">
-<span class="ring">💍</span> Nuestra Boda <span class="ring">💍</span>
-</h1>
+  <h1 class="titulo">Nuestra Boda</h1>
 
+  <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="anillo">
+</div>
 <div class="nombres">
-Santos Bacilia Murillo ❤️ Jose Daniel Mendez
+Santos Bacilia Murillo Y Jose Daniel Mendez
 </div>
 
 <h2>Nuestros momentos ❤️</h2>
@@ -260,10 +284,9 @@ Santos Bacilia Murillo ❤️ Jose Daniel Mendez
 
 <p class="texto-musica">
 Presiona el ❤️ para escuchar nuestra canción
-</p>
 
 <div class="player">
-<button onclick="document.getElementById('audio').play()">❤️</button>
+<button onclick="toggleMusica()" id="btnMusica">❤️</button>
 </div>
 
 <p class="info">
@@ -276,36 +299,68 @@ Con la bendición de Dios y nuestros padres te invitamos a compartir este día e
 
 <h3>Faltan para la boda:</h3>
 <div class="countdown" id="contador"></div>
-
-<br>
-
-<a href="https://wa.me/50498647047" target="_blank">
-<button>Confirmar asistencia</button>
-</a>
-
 </div>
+<section>
 
-<!-- BUZÓN -->
-<section class="buzon-seccion">
+  <!-- BUZÓN DE MENSAJES -->
+  <div class="buzon-box">
+    <h3>💌 Buzón de los deseos</h3>
 
+    <p>Déjanos un mensaje bonito para este día especial ❤️</p>
+
+    <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
+
+    <button onclick="enviarMensaje()">Enviar mensaje</button>
+    </div>
+
+  <!-- SECCIÓN CANCIÓN -->
+  <div class="buzon-box">
+    <h3>🎵 Recomiéndanos una canción</h3>
+
+    <p>Queremos escuchar tu sugerencia de música que no puede faltar en nuestro gran día ❤️</p>
+
+    <textarea id="cancion" placeholder="Nombre de la canción..."></textarea>
+    <textarea id="artista" placeholder="Nombre del artista..."></textarea>
+
+    <button onclick="enviarCancion()">Enviar recomendación</button>
+  </div>
 <div class="buzon-box">
+  <h3>✅ Confirmar asistencia</h3>
 
-<h3>💌 Buzón de los deseos</h3>
+  <textarea id="nombreAsistencia" placeholder="Tu nombre..."></textarea>
 
-<p>Déjanos un mensaje bonito para este día especial ❤️</p>
+  <select id="asistencia">
+    <option value="">¿Asistirás?</option>
+    <option value="Sí">Sí asistiré 🎉</option>
+    <option value="No">No podré asistir 😢</option>
+  </select>
 
-<textarea id="mensaje" placeholder="Escribe tu mensaje aquí..."></textarea>
-
-<button onclick="enviarMensaje()">Enviar mensaje</button>
-
+  <button onclick="confirmarAsistencia()">Confirmar</button>
 </div>
 
 </section>
-
 </div>
 
+<!-- 🔥 FIREBASE (AQUÍ VA) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 <script>
 
+
+// CONFIG FIREBASE
+const firebaseConfig = {
+  apiKey: "AIzaSyAikhxtOOLRDGT4TKhx08Lsdhsju3aMnxQ",
+  authDomain: "boda-kevin.firebaseapp.com",
+  databaseURL: "https://boda-kevin-default-rtdb.firebaseio.com",
+  projectId: "boda-kevin",
+  storageBucket: "boda-kevin.firebasestorage.app",
+  messagingSenderId: "684140849285",
+  appId: "1:684140849285:web:5864e26103931fb5dea1ec",
+  measurementId: "G-SX2126JEQJ"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+ 
 /* ABRIR SOBRE */
 function abrirInvitacion(){
 document.getElementById("sobre").style.display="none";
@@ -328,8 +383,6 @@ if(index<0) index=slides.length-1;
 mostrar();
 }
 
-mostrar();
-
 /* MENSAJE */
 function enviarMensaje(){
 let mensaje=document.getElementById("mensaje").value;
@@ -339,8 +392,6 @@ alert("Escribe un mensaje 😊");
 return;
 }
 
-let url="https://wa.me/50498647047?text="+encodeURIComponent("Mensaje para la boda ❤️: "+mensaje);
-window.open(url,"_blank");
 }
 
 /* CONTADOR */
@@ -381,6 +432,71 @@ document.body.appendChild(c);
 setTimeout(()=>c.remove(),8000);
 },800);
 
+let params = new URLSearchParams(window.location.search);
+let nombre = params.get("nombre");
+
+if(nombre){
+document.querySelector(".card").insertAdjacentHTML("beforeend",
+"<p style='margin-top:20px;font-size:18px;'>Invitación especial para <b>"+nombre+"</b> 💌</p>");
+}
+
+function enviarCancion(){
+
+let cancion = document.getElementById("cancion").value;
+let artista = document.getElementById("artista").value;
+
+if(cancion === "" || artista === ""){
+alert("Completa los campos 😊");
+return;
+}
+
+//GUARDAR EN FIREBASE
+db.ref("canciones").push({
+cancion: cancion,
+artista: artista
+});
+
+alert("¡Gracias por tu recomendación! 🎵");
+
+document.getElementById("cancion").value = "";
+document.getElementById("artista").value = "";
+
+}
+
+function confirmarAsistencia(){
+
+  let nombre = document.getElementById("nombreAsistencia").value;
+  let asistencia = document.getElementById("asistencia").value;
+
+  if(nombre === "" || asistencia === ""){
+    alert("Completa los campos 😊");
+    return;
+  }
+
+  db.ref("asistencia").push({
+    nombre: nombre,
+    asistencia: asistencia,
+    fecha: Date.now()
+  });
+
+  alert("💌 ¡Gracias por confirmar!");
+
+  document.getElementById("nombreAsistencia").value = "";
+  document.getElementById("asistencia").value = "";
+}
+
+ var audio = document.getElementById("audio");
+  var boton = document.getElementById("btnMusica");
+
+  function toggleMusica() {
+    if (audio.paused) {
+      audio.play();
+      boton.innerHTML = "⏸️ Pausar canción";
+    } else {
+      audio.pause();
+      boton.innerHTML = "❤️ Reproducir canción";
+    }
+  }
 </script>
 
 </body>
