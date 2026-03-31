@@ -327,9 +327,9 @@ Con la bendición de Dios y nuestros padres te invitamos a compartir este día e
 <div class="buzon-box">
   <h3>✅ Confirmar asistencia</h3>
 
-  <textarea id="nombreAsistencia" placeholder="Tu nombre..."></textarea>
+  <input type="text" id="nombreAsistencias" placeholder="Tu nombre...">
 
-  <select id="asistencia">
+  <select id="asistencias">
     <option value="">¿Asistirás?</option>
     <option value="Sí">Sí asistiré 🎉</option>
     <option value="No">No podré asistir 😢</option>
@@ -392,6 +392,26 @@ alert("Escribe un mensaje 😊");
 return;
 }
 
+}
+
+function enviarMensaje(){
+
+let mensaje = document.getElementById("mensaje").value;
+
+if(mensaje === ""){
+alert("Escribe un mensaje 😊");
+return;
+}
+
+// GUARDAR EN FIREBASE
+firebase.database().ref("mensajes").push({
+mensaje: mensaje,
+fecha: new Date().toLocaleString()
+});
+
+alert("💌 Mensaje guardado");
+
+document.getElementById("mensaje").value="";
 }
 
 /* CONTADOR */
@@ -462,28 +482,29 @@ document.getElementById("cancion").value = "";
 document.getElementById("artista").value = "";
 
 }
-
 function confirmarAsistencia(){
 
-  let nombre = document.getElementById("nombreAsistencia").value;
-  let asistencia = document.getElementById("asistencia").value;
+let nombre = document.getElementById("nombreAsistencia").value;
+let asistencia = document.getElementById("asistencia").value;
 
-  if(nombre === "" || asistencia === ""){
-    alert("Completa los campos 😊");
-    return;
-  }
-
-  db.ref("asistencia").push({
-    nombre: nombre,
-    asistencia: asistencia,
-    fecha: Date.now()
-  });
-
-  alert("💌 ¡Gracias por confirmar!");
-
-  document.getElementById("nombreAsistencia").value = "";
-  document.getElementById("asistencia").value = "";
+if(nombre === "" || asistencia === ""){
+alert("Completa los campos 😊");
+return;
 }
+
+db.ref("invitados").push({
+nombre: nombre,
+asistencia: asistencia,
+fecha: new Date().toLocaleString()
+});
+
+alert("💌 ¡Gracias por confirmar!");
+
+document.getElementById("nombreAsistencia").value = "";
+document.getElementById("asistencia").value = "";
+
+}
+
 
  var audio = document.getElementById("audio");
   var boton = document.getElementById("btnMusica");
