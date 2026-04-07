@@ -327,14 +327,13 @@ Con la bendición de Dios y nuestros padres te invitamos a compartir este día e
 <div class="buzon-box">
   <h3>✅ Confirmar asistencia</h3>
 
-  <input type="text" id="nombreAsistencias" placeholder="Tu nombre...">
+ <input type="text" id="nombreAsistencia" placeholder="Tu nombre...">
 
-  <select id="asistencias">
-    <option value="">¿Asistirás?</option>
-    <option value="Sí">Sí asistiré 🎉</option>
-    <option value="No">No podré asistir 😢</option>
-  </select>
-
+<select id="asistencia">
+  <option value="" disabled selected>¿Asistirás a nuestra boda?</option>
+  <option value="Sí">Sí asistiré 🎉</option>
+  <option value="No">No podré asistir 😢</option>
+</select>
   <button onclick="confirmarAsistencia()">Confirmar</button>
 </div>
 
@@ -482,24 +481,32 @@ document.getElementById("cancion").value = "";
 document.getElementById("artista").value = "";
 
 }
-function confirmarAsistencia(){
+window.confirmarAsistencia = function(){
 
 let nombre = document.getElementById("nombreAsistencia").value;
 let asistencia = document.getElementById("asistencia").value;
 
-if(nombre === "" || asistencia === ""){
+// VALIDACIÓN 🔥
+if(nombre.trim() === "" || asistencia === ""){
 alert("Completa los campos 😊");
 return;
 }
 
+// GUARDAR EN FIREBASE 🔥
 db.ref("invitados").push({
 nombre: nombre,
 asistencia: asistencia,
 fecha: new Date().toLocaleString()
+})
+.then(()=>{
+alert("¡Gracias por confirmar tu asistencia! 🎉");
+})
+.catch((e)=>{
+alert("ERROR: " + e);
+console.error(e);
 });
 
-alert("💌 ¡Gracias por confirmar!");
-
+// LIMPIAR CAMPOS
 document.getElementById("nombreAsistencia").value = "";
 document.getElementById("asistencia").value = "";
 
